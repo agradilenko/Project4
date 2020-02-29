@@ -46,7 +46,7 @@ body {
 
 .main-blocks .header {
 	position: relative;
-	
+
 	display: flex;
 	flex-direction: column;
 
@@ -118,6 +118,18 @@ body {
 .btn-save {
 	background: url('https://img.icons8.com/color/64/000000/save.png') no-repeat;
 	background-size: cover;
+}
+
+.btn-show {
+	background: url('https://img.icons8.com/ios/50/000000/visible.png') no-repeat;
+	position: relative;
+	background-size : cover;
+}
+
+.btn-hide {
+	background: url('https://img.icons8.com/ios/50/000000/hide.png') no-repeat;
+	position: relative;
+	background-size : cover;
 }
 
 .btn-cancel {

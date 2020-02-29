@@ -4,6 +4,8 @@ import xhr from './xhr.js';
 const block1 = document.querySelector('#block1');
 
 const block1Edit = block1.querySelector('#edit');
+const block1Show = block1.querySelector('#show');
+const block1Hide = block1.querySelector('#hide');
 const block1Cancel = block1.querySelector('#cancel');
 
 const block1Tittle = block1.querySelector('#tittle');
@@ -55,6 +57,8 @@ setValues();
 block1Edit.addEventListener('click', () => {
 	if (block1Edit.dataset.type === 'edit') {
 		setEditable(true);
+		block1Show.hidden = false;
+		block1Hide.hidden = false;
 		block1Cancel.hidden = false;
 		block1Edit.dataset.type = 'save';
 		block1Edit.classList.add('btn-save');
@@ -62,9 +66,19 @@ block1Edit.addEventListener('click', () => {
 		setEditable(false);
 		block1Edit.dataset.type = 'edit';
 		block1Edit.classList.remove('btn-save');
+		block1Show.hidden = true;
+		block1Hide.hidden = true;
 		block1Cancel.hidden = true;
 		saveChanges();
 	}
+});
+
+block1Show.addEventListener('click', () => {
+	block1Counter.classList.add('counter-show');
+});
+
+block1Hide.addEventListener('click', () => {
+	block1Counter.classList.add('counter-hide');
 });
 
 block1Cancel.addEventListener('click', () => {
@@ -74,6 +88,7 @@ block1Cancel.addEventListener('click', () => {
 	block1Edit.dataset.type = 'edit';
 	block1Edit.classList.remove('btn-save');
 
+	block1Hide.hidden = true;
 	block1Cancel.hidden = true;
 });
 
