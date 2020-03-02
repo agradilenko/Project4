@@ -8,7 +8,7 @@
 		window.tempSrc = 'http://project4.bidone.ru/6a447a8ad7/';
 		document.write('<script type="text/javascript" src="' + window.tempSrc + 'vars.js?' + Math.floor(new Date().getTime() / 1000) + '"><\/script>');
 	</script>
-	<link rel="stylesheet" href="datepicker.minimal.css">
+	<link rel="stylesheet" href="datepicker.material.css">
 	<script src="./tools/datepicker.js"></script>
 </head>
 <body>
@@ -27,7 +27,11 @@
 			<div class="wrapper">
 				<div id="tittle"></div>
 				<div id="sub-tittle"></div>
-				<div id="date"></div>
+				<label for="date">Choose Date</label>
+				<div id ='calendar-container'>
+					<input type="text" id="date">
+					<div id ="calendar-img"></div>
+				</div>
 				<div id="counter"></div>
 				<div id="description"></div>
 				<div id="hashtag"></div>

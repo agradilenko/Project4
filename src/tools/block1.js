@@ -17,37 +17,35 @@ const block1Hashtag = block1.querySelector('#hashtag');
 
 const vars = window.siteInfo;
 
-// eslint-disable-next-line no-unused-vars,no-undef
-const pDate = new Datepicker(block1Date);
+// eslint-disable-next-line no-undef
+const pDate = new Datepicker('#date');
+// eslint-disable-next-line no-underscore-dangle
+pDate._opts.onChange = () => {
+	diffBetweenDates(pDate.getDate());
+};
 
 const sklonenie = (number, txt, cases = [2, 0, 1, 1, 1, 2]) => txt[(number % 100 > 4
 	&& number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 
 const diffBetweenDates = (date) => {
-	let ISOfutureDate;
-	if (typeof (date) === 'string' && date.replace('.', '').length !== date.length)
-		ISOfutureDate = new Date(date.replace(/(\d+)\.(\d+)\.(\d+)/, '$2/$1/$3'));
 	const currentDate = new Date();
-	const difference = Math.ceil((ISOfutureDate.getTime() - currentDate.getTime())
+	const difference = Math.ceil((date.getTime() - currentDate.getTime())
 		/ (1000 * 3600 * 24));
 	const varia = ['день', 'дня', 'дней'];
 	const vari2 = ['Остался', 'Осталось', 'Осталось'];
-	if (difference < 0)
-		block1Counter.hidden = true;
-	else if (difference > 0) {
+	if (difference === 0 && vars.counterShow === true)
+		block1Counter.innerHTML = 'Событие сегодня';
+	else if (difference > 0 && vars.counterShow === true) {
 		block1Counter.hidden = false;
 		block1Counter.innerHTML = `${sklonenie(difference, vari2)} ${difference} ${sklonenie(difference, varia)}`;
-	} else {
-		block1Counter.hidden = false;
-		block1Counter.innerHTML = 'Событие сегодня';
-	}
+	} else if (difference < 0 || vars.counterShow === false)
+		block1Counter.hidden = true;
 };
 
 const setValues = () => {
 	block1Tittle.innerHTML = `${vars.person1Name} & ${vars.person2Name}`;
 	block1SubTittle.innerHTML = vars.subTittle;
-	block1Date.innerHTML = vars.date;
-	diffBetweenDates(vars.date);
+	pDate.setDate(vars.date);
 	block1Description.innerHTML = vars.description;
 	block1Hashtag.innerHTML = vars.hashtag;
 };
@@ -74,12 +72,23 @@ block1Edit.addEventListener('click', () => {
 });
 
 block1Show.addEventListener('click', () => {
-	block1Counter.classList.add('counter-show');
+	block1Counter.hidden = false;
+	vars.counterShow = true;
+	diffBetweenDates(pDate.getDate());
 });
 
 block1Hide.addEventListener('click', () => {
-	block1Counter.classList.add('counter-hide');
+	block1Counter.hidden = true;
+	vars.counterShow = false;
 });
+
+const showCounter = () => {
+	const counter = block1Counter;
+	if (counter.hidden)
+		counter.hidden = false;
+	else
+		counter.hidden = true;
+};
 
 block1Cancel.addEventListener('click', () => {
 	setEditable(false);
@@ -87,7 +96,7 @@ block1Cancel.addEventListener('click', () => {
 
 	block1Edit.dataset.type = 'edit';
 	block1Edit.classList.remove('btn-save');
-
+	block1Show.hidden = true;
 	block1Hide.hidden = true;
 	block1Cancel.hidden = true;
 });
@@ -95,13 +104,14 @@ block1Cancel.addEventListener('click', () => {
 const saveChanges = () => {
 	const callbackSuccess = (data) => {
 		alert(data.message);
-		diffBetweenDates(block1Date.innerHTML);
+		diffBetweenDates();
+		showCounter();
 	};
 
 	xhr.request = {
 		metod: 'PUT',
 		url: `site/${vars.site}/variables`,
-		data: `subTittle=${block1SubTittle.innerHTML}&date=${block1Date.innerHTML}&description=${block1Description.innerHTML}&hashtag=${block1Hashtag.innerHTML}`,
+		data: `subTittle=${block1SubTittle.innerHTML}&date=${pDate.getDate()}&description=${block1Description.innerHTML}&hashtag=${block1Hashtag.innerHTML}&counterShow=${!block1Counter.hidden}`,
 		callbackSuccess
 	};
 };
