@@ -198,6 +198,7 @@ body {
 
 #calendar-container {
 	display:inline-block;
+	cursor: pointer;
 }
 
 #calendar-img {
@@ -212,9 +213,4 @@ body {
 #calendar-container:hover > #calendar-img {
 	visibility: visible;
 	display: inline-block;
-}
-
-#date {
-	color: white;
-	background-color: rgba(0, 0, 0, 0.4);
 }
