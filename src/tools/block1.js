@@ -14,7 +14,7 @@ const block1Counter = block1.querySelector('#counter');
 const block1Description = block1.querySelector('#description');
 const block1Hashtag = block1.querySelector('#hashtag');
 
-const vars = window.siteInfo;
+let vars = window.siteInfo;
 
 // eslint-disable-next-line no-undef
 const pDate = new Datepicker('#date');
@@ -45,7 +45,8 @@ const diffBetweenDates = (date) => {
 const setValues = () => {
 	block1Tittle.innerHTML = `${vars.person1Name} & ${vars.person2Name}`;
 	block1SubTittle.innerHTML = vars.subTittle;
-	pDate.setDate(vars.date);
+	const date = new Date(vars.date.replace(/(\d+)\.(\d+)\.(\d+)/, '$2/$1/$3'));
+	pDate.setDate(date);
 	if (vars.counterShow === true) {
 		block1ShowHide.classList.remove('btn-show');
 		block1ShowHide.classList.add('btn-hide');
@@ -111,17 +112,44 @@ block1Cancel.addEventListener('click', () => {
 
 const saveChanges = () => {
 	const callbackSuccess = (data) => {
-		alert(data.message);
-		diffBetweenDates();
-		showCounter();
+		console.log(data.message);
+		// showCounter();
+		changesMap.forEach((value, key) => {
+			window.siteInfo[key] = value;
+		});
+		vars = window.siteInfo;
 	};
-
-	xhr.request = {
-		metod: 'PUT',
-		url: `site/${vars.site}/variables`,
-		data: `subTittle=${block1SubTittle.innerHTML}&date=${pDate.getDate()}&description=${block1Description.innerHTML}&hashtag=${block1Hashtag.innerHTML}&counterShow=${!block1Counter.hidden}`,
-		callbackSuccess
-	};
+	let data = '';
+	const changesMap = new Map();
+	if (block1SubTittle.innerHTML !== vars.subTittle) {
+		data += `${(data.length === 0 ? '' : '&')}subTittle=${block1SubTittle.innerHTML}`;
+		changesMap.set('subTittle', block1SubTittle.innerHTML);
+	}
+	if (pDate.getValue() !== vars.date) {
+		data += `${(data.length === 0 ? '' : '&')}date=${pDate.getValue()}`;
+		changesMap.set('date', pDate.getValue());
+	}
+	if (block1Description.innerHTML !== vars.description) {
+		data += `${(data.length === 0 ? '' : '&')}description=${block1Description.innerHTML}`;
+		changesMap.set('description', block1Description.innerHTML);
+	}
+	if (block1Hashtag.innerHTML !== vars.hashtag) {
+		data += `${(data.length === 0 ? '' : '&')}hashtag=${block1Hashtag.innerHTML}`;
+		changesMap.set('hashtag', block1Hashtag.innerHTML);
+	}
+	if (block1Counter.hidden !== vars.counterShow) {
+		data += `${(data.length === 0 ? '' : '&')}counterShow=${!block1Counter.hidden}`;
+		changesMap.set('counterShow', !block1Counter.hidden);
+	}
+	alert(data);
+	if (data.length !== 0) {
+		xhr.request = {
+			metod: 'PUT',
+			url: `site/${vars.site}/variables`,
+			data: `${data}`,
+			callbackSuccess
+		};
+	}
 };
 
 
