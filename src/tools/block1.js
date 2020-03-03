@@ -7,7 +7,8 @@ const block1Edit = block1.querySelector('#edit');
 const block1ShowHide = block1.querySelector('#show-hide');
 const block1Cancel = block1.querySelector('#cancel');
 
-const block1Tittle = block1.querySelector('#tittle');
+const block1Person1 = block1.querySelector('#name1');
+const block1Person2 = block1.querySelector('#name2');
 const block1SubTittle = block1.querySelector('#sub-tittle');
 const block1Date = block1.querySelector('#date');
 const block1Counter = block1.querySelector('#counter');
@@ -43,7 +44,8 @@ const diffBetweenDates = (date) => {
 };
 
 const setValues = () => {
-	block1Tittle.innerHTML = `${vars.person1Name} & ${vars.person2Name}`;
+	block1Person1.innerHTML = `${vars.person1Name}`;
+	block1Person2.innerHTML = `${vars.person2Name}`;
 	block1SubTittle.innerHTML = vars.subTittle;
 	const date = new Date(vars.date.replace(/(\d+)\.(\d+)\.(\d+)/, '$2/$1/$3'));
 	pDate.setDate(date);
@@ -92,6 +94,7 @@ block1ShowHide.addEventListener('click', () => {
 	}
 });
 
+// eslint-disable-next-line no-unused-vars
 const showCounter = () => {
 	const counter = block1Counter;
 	if (counter.hidden)
@@ -141,6 +144,14 @@ const saveChanges = () => {
 		data += `${(data.length === 0 ? '' : '&')}counterShow=${!block1Counter.hidden}`;
 		changesMap.set('counterShow', !block1Counter.hidden);
 	}
+	if (block1Person1.innerHTML !== vars.person1Name) {
+		data += `${(data.length === 0 ? '' : '&')}person1Name=${block1Person1.innerHTML}`;
+		changesMap.set('person1Name', block1Person1.innerHTML);
+	}
+	if (block1Person2.innerHTML !== vars.person2Name) {
+		data += `${(data.length === 0 ? '' : '&')}person2Name=${block1Person2.innerHTML}`;
+		changesMap.set('person2Name', block1Person2.innerHTML);
+	}
 	alert(data);
 	if (data.length !== 0) {
 		xhr.request = {
@@ -154,7 +165,8 @@ const saveChanges = () => {
 
 
 const setEditable = (flag) => {
-	block1Tittle.contentEditable = flag;
+	block1Person1.contentEditable = flag;
+	block1Person2.contentEditable = flag;
 	block1SubTittle.contentEditable = flag;
 	block1Date.contentEditable = flag;
 	block1Counter.contentEditable = flag;
@@ -162,14 +174,16 @@ const setEditable = (flag) => {
 	block1Hashtag.contentEditable = flag;
 
 	if (flag) {
-		block1Tittle.classList.add('edit');
+		block1Person1.classList.add('edit');
+		block1Person2.classList.add('edit');
 		block1SubTittle.classList.add('edit');
 		block1Date.classList.add('edit');
 		block1Counter.classList.add('edit');
 		block1Description.classList.add('edit');
 		block1Hashtag.classList.add('edit');
 	} else {
-		block1Tittle.classList.remove('edit');
+		block1Person1.classList.remove('edit');
+		block1Person2.classList.remove('edit');
 		block1SubTittle.classList.remove('edit');
 		block1Date.classList.remove('edit');
 		block1Counter.classList.remove('edit');
