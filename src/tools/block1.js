@@ -9,7 +9,7 @@ const block1Cancel = block1.querySelector('#cancel');
 
 const block1Person1 = block1.querySelector('#name1');
 const block1Person2 = block1.querySelector('#name2');
-const block1SubTittle = block1.querySelector('#sub-tittle');
+const block1subTitle = block1.querySelector('#sub-tittle');
 const block1Date = block1.querySelector('#date');
 const block1Counter = block1.querySelector('#counter');
 const block1Description = block1.querySelector('#description');
@@ -46,7 +46,7 @@ const diffBetweenDates = (date) => {
 const setValues = () => {
 	block1Person1.innerHTML = `${vars.person1Name}`;
 	block1Person2.innerHTML = `${vars.person2Name}`;
-	block1SubTittle.innerHTML = vars.subTittle;
+	block1subTitle.innerHTML = vars.subTitle;
 	const date = new Date(vars.date.replace(/(\d+)\.(\d+)\.(\d+)/, '$2/$1/$3'));
 	pDate.setDate(date);
 	if (vars.counterShow === true) {
@@ -124,9 +124,9 @@ const saveChanges = () => {
 	};
 	let data = '';
 	const changesMap = new Map();
-	if (block1SubTittle.innerHTML !== vars.subTittle) {
-		data += `${(data.length === 0 ? '' : '&')}subTittle=${block1SubTittle.innerHTML}`;
-		changesMap.set('subTittle', block1SubTittle.innerHTML);
+	if (block1subTitle.innerHTML !== vars.subTitle) {
+		data += `${(data.length === 0 ? '' : '&')}subTitle=${block1subTitle.innerHTML}`;
+		changesMap.set('subTitle', block1subTitle.innerHTML);
 	}
 	if (pDate.getValue() !== vars.date) {
 		data += `${(data.length === 0 ? '' : '&')}date=${pDate.getValue()}`;
@@ -167,7 +167,7 @@ const saveChanges = () => {
 const setEditable = (flag) => {
 	block1Person1.contentEditable = flag;
 	block1Person2.contentEditable = flag;
-	block1SubTittle.contentEditable = flag;
+	block1subTitle.contentEditable = flag;
 	block1Date.contentEditable = flag;
 	block1Counter.contentEditable = flag;
 	block1Description.contentEditable = flag;
@@ -176,7 +176,7 @@ const setEditable = (flag) => {
 	if (flag) {
 		block1Person1.classList.add('edit');
 		block1Person2.classList.add('edit');
-		block1SubTittle.classList.add('edit');
+		block1subTitle.classList.add('edit');
 		block1Date.classList.add('edit');
 		block1Counter.classList.add('edit');
 		block1Description.classList.add('edit');
@@ -184,7 +184,7 @@ const setEditable = (flag) => {
 	} else {
 		block1Person1.classList.remove('edit');
 		block1Person2.classList.remove('edit');
-		block1SubTittle.classList.remove('edit');
+		block1subTitle.classList.remove('edit');
 		block1Date.classList.remove('edit');
 		block1Counter.classList.remove('edit');
 		block1Description.classList.remove('edit');

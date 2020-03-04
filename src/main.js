@@ -22,7 +22,7 @@ const init = () => {
 
 		xhr({
 			metod: 'PUT',
-			url: `site/${window.siteInfo.site}/variables/subtittle`,
+			url: `site/${window.siteInfo.site}/variables/subTitle`,
 			data: 'value=modaInput.value',
 			callbackSuccess
 		});
