@@ -101,9 +101,7 @@ body {
 
 #block2 .wrapper > div{
 	display: flex;
-	flex-direction: column;
-
-	width: 50%;
+	flex-direction: row;
 }
 
 #block2 .wrapper img{
@@ -233,6 +231,15 @@ body {
 
 #calendar-container:hover > #calendar-img {
 	visibility: visible;
+}
+
+#photo-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.photo {
+	width: 50%;
 }
 
 

@@ -15,7 +15,7 @@ const person2Photo = block2.querySelector('#person2-photo');
 const person2Name = block2.querySelector('#person2-name');
 const person2Description = block2.querySelector('#person2-description');
 
-const vars = window.siteInfo;
+let vars = window.siteInfo;
 
 const init = () => {
 	setValues();
@@ -45,6 +45,52 @@ const uploadPhoto = (field, file) => {
 		data: file,
 		callbackSuccess
 	};
+};
+
+// eslint-disable-next-line no-unused-vars
+const saveChanges = () => {
+	const callbackSuccess = (data) => {
+		console.log(data.message);
+		changesMap.forEach((value, key) => {
+			window.siteInfo[key] = value;
+		});
+		vars = window.siteInfo;
+	};
+	let data = '';
+	const changesMap = new Map();
+	if (person1Name.innerHTML !== vars.person1Name) {
+		data += `${(data.length === 0 ? '' : '&')}person1Name=${person1Name.innerHTML}`;
+		changesMap.set('person1Name', person1Name.innerHTML);
+	}
+	if (person2Name.innerHTML !== vars.person2Name) {
+		data += `${(data.length === 0 ? '' : '&')}person2Name=${person2Name.innerHTML}`;
+		changesMap.set(' person2Name', person2Name.innerHTML);
+	}
+	if (person1Description.innerHTML !== vars.person1Description) {
+		data += `${(data.length === 0 ? '' : '&')}person1Description=${person1Description.innerHTML}`;
+		changesMap.set('person1Description', person1Description.innerHTML);
+	}
+	if (person2Description.innerHTML !== vars.person2Description) {
+		data += `${(data.length === 0 ? '' : '&')}person2Description=${person2Description.innerHTML}`;
+		changesMap.set('person2Description', person2Description.innerHTML);
+	}
+	//  if (person1Photo.src !== vars.person1Photo) {
+	// data += `${(data.length === 0 ? '' : '&')}person1Photo=${person2Photo.src}`;
+	// changesMap.set('person1Photo', person1Photo.src);
+	// }
+	//  if (person2Photo.src !== vars.person2Photo) {
+	// data += `${(data.length === 0 ? '' : '&')}person2Photo=${person2Photo.src}`;
+	// changesMap.set('person2Photo', person2Photo.src);
+	// }
+	alert(data);
+	if (data.length !== 0) {
+		xhr.request = {
+			metod: 'PUT',
+			url: `site/${vars.site}/variables`,
+			data: `${data}`,
+			callbackSuccess
+		};
+	}
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -86,7 +132,7 @@ block2Edit.addEventListener('click', () => {
 		block2Edit.dataset.type = 'edit';
 		block2Edit.classList.remove('btn-save');
 		block2Cancel.hidden = true;
-		uploadPhoto();
+		saveChanges();
 	}
 });
 
