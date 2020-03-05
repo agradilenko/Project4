@@ -3,7 +3,8 @@ import xhr from './xhr.js';
 
 const block2 = document.querySelector('#block2');
 
-const edit = block2.querySelector('#edit');
+const block2Edit = block2.querySelector('#edit');
+const block2Cancel = block2.querySelector('#cancel');
 
 const person1Photo = block2.querySelector('#person1-photo');
 const person1PhotoUploader = block2.querySelector('#person1-photo-uploader');
@@ -18,11 +19,6 @@ const vars = window.siteInfo;
 
 const init = () => {
 	setValues();
-
-	edit.addEventListener('click', () => {
-		alert('editor is loading... almost');
-	});
-
 	person1PhotoUploader.addEventListener('change', (evt) => {
 		uploadPhoto('person1Photo', evt.target.files[0]);
 	});
@@ -51,4 +47,54 @@ const uploadPhoto = (field, file) => {
 	};
 };
 
+// eslint-disable-next-line no-unused-vars
+const setEditable = (flag) => {
+	person1Photo.contentEditable = flag;
+	person2Photo.contentEditable = flag;
+	person1Name.contentEditable = flag;
+	person2Name.contentEditable = flag;
+	person1Description.contentEditable = flag;
+	person2Description.contentEditable = flag;
+
+	if (flag) {
+		person1Photo.classList.add('edit');
+		person2Photo.classList.add('edit');
+		person1Name.classList.add('edit');
+		person2Name.classList.add('edit');
+		person1Description.classList.add('edit');
+		person2Description.classList.add('edit');
+	} else {
+		person1Photo.classList.remove('edit');
+		person2Photo.classList.remove('edit');
+		person1Name.classList.remove('edit');
+		person2Name.classList.remove('edit');
+		person1Description.classList.remove('edit');
+		person2Description.classList.remove('edit');
+	}
+};
+
 init();
+
+block2Edit.addEventListener('click', () => {
+	if (block2Edit.dataset.type === 'edit') {
+		setEditable(true);
+		block2Cancel.hidden = false;
+		block2Edit.dataset.type = 'save';
+		block2Edit.classList.add('btn-save');
+	} else {
+		setEditable(false);
+		block2Edit.dataset.type = 'edit';
+		block2Edit.classList.remove('btn-save');
+		block2Cancel.hidden = true;
+		uploadPhoto();
+	}
+});
+
+block2Cancel.addEventListener('click', () => {
+	setEditable(false);
+	setValues();
+
+	block2Edit.dataset.type = 'edit';
+	block2Edit.classList.remove('btn-save');
+	block2Cancel.hidden = true;
+});
