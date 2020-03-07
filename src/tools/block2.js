@@ -14,6 +14,7 @@ const person1Description = block2.querySelector('#person1-description');
 const person2Photo = block2.querySelector('#person2-photo');
 const person2Name = block2.querySelector('#person2-name');
 const person2Description = block2.querySelector('#person2-description');
+const person2PhotoUploader = block2.querySelector('#person2-photo-uploader');
 
 let vars = window.siteInfo;
 
@@ -21,6 +22,9 @@ const init = () => {
 	setValues();
 	person1PhotoUploader.addEventListener('change', (evt) => {
 		uploadPhoto('person1Photo', evt.target.files[0]);
+	});
+	person2PhotoUploader.addEventListener('change', (evt) => {
+		uploadPhoto('person2Photo', evt.target.files[1]);
 	});
 };
 
@@ -37,6 +41,7 @@ const setValues = () => {
 const uploadPhoto = (field, file) => {
 	const callbackSuccess = () => {
 		person1Photo.src = `${vars.person1Photo}?${Math.floor(new Date().getTime() / 1000)}`;
+		person2Photo.src = `${vars.person2Photo}?${Math.floor(new Date().getTime() / 1000)}`;
 	};
 
 	xhr.request = {

@@ -214,6 +214,10 @@ body {
 	justify-content: center;
 }
 
+#person1-photo-uploader {
+	background: url("https://img.icons8.com/material-rounded/24/000000/downloading-updates.png") no-repeat;
+}
+
 #calendar-img {
 	width: 50px;
 	height: 50px;
@@ -236,10 +240,105 @@ body {
 #photo-container {
 	display: flex;
 	flex-direction: row;
+	width: 100%;
 }
 
 .photo {
 	width: 50%;
 }
+
+#photo-1-bubble {
+	color: #fff;
+	opacity: 0;
+	transition: all 200ms ease-in-out;
+	background-color: rgba(29,32,34,.7);
+	width: 262.5px;
+	display: none;
+}
+
+#person1-photo-container:hover #photo-1-bubble {
+	opacity: 100;
+	-webkit-transform: translateY(-120px);
+	-moz-transform: translateY(-120px);
+	-o-transform: translateY(-120px);
+	display: block;
+	overflow: hidden;
+
+}
+
+#photo-2-bubble {
+	color: #fff;
+	opacity: 0;
+	transition: all 200ms ease-in-out;
+	background-color: rgba(29,32,34,.7);
+	width: 262.5px;
+	display: none;
+}
+
+#person2-photo-container:hover #photo-2-bubble {
+	opacity: 100;
+	-webkit-transform: translateY(-120px);
+	-moz-transform: translateY(-120px);
+	-o-transform: translateY(-120px);
+	overflow: hidden;
+	display: block;
+}
+
+#photo1-bubble-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+#photo2-bubble-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+#photo1-bubble-action-edit {
+	cursor: pointer;
+	padding: 5px 0px;
+}
+
+#photo1-bubble-action-update {
+	cursor: pointer;
+	padding: 5px 0px;
+}
+
+#photo2-bubble-action-edit {
+	cursor: pointer;
+	padding: 5px 0px;
+}
+
+#photo2-bubble-action-update {
+	cursor: pointer;
+	padding: 5px 0px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	color: white;
+	display: inline-block;
+	cursor: pointer; /* "hand" cursor */
+}
+
+#person2-photo-container{
+	height: 334px;
+	overflow: hidden;
+}
+
+#person1-photo-container{
+	height: 334px;
+	overflow: hidden;
+}
+
+
 
 
